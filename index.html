@@ -5,7 +5,8 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="15418 Final Project : 15418 Final Project Site for Vivek Krishnan" />
-
+    <link href="css/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>15418 Final Project</title>
@@ -33,27 +34,69 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p> I plan to implement the Random Forest Classification image processing algorithm on an FPGA. I will then compare
+        <p> I plan to implement the Random Forest Classification Algorithm on an FPGA. I will then compare
             energy consumption and performance of the algorithm vs current CPU implementations.</p>
       </section>
       
       <section id="main_content" class="inner">
-        <p> Background </p>
+       <span style = "color:blue"> Background </span>
+        <p> A Random Forest is an ensemble classifier using many decision tree models. The training of this algorithm involves
+            taking a subset of the sample data with replacement in order to grow decision trees that have levels directly related
+            to the input variables. Random Forest Classifiers are highly accurate, scale well to large datasets, and give back 
+            information about variable interaction or importance as well.
+        </p>
+        <p> The purpose of my project is to speedup the classification part of the random forest algorithm (as opposed to the
+            growth of decision trees).
+        </p>
+        
+        <pre class='brush: cpp'>
+        // my first program in C++
+        #include <iostream>
+        using namespace std;
+
+       int main ()
+       {
+         cout << "Hello World!";
+         return 0;
+       }
+       </pre>
+       
       </section>
       
       <section id="main_content" class="inner">
-        <p> Challenge </p>
+      <span style = "color:blue"> Challenge </span>
+        <p> At first glance, the random forest classification algorithm may not look like it has too much to
+            gain from implementation on an FPGA or hardware device. For any given given decision tree in the forest,
+            travesing each level of the tree requires only one comparison compared to one lookup of the next appropriate
+            state of the tree. Therefore, the computation to communication ration is inherently low in this algorithm. 
+            Each decision also  requires that the decision in the previous level has already been made. 
+            
+            Another problem is that the many decision trees spit out by the tree-growing algorithms can greatly vary in
+            size and shape so any fixed width solution (such as SIMD parallelsim) can be made inefficient by the data-
+            dependent nature of the method.
+            
+            In addition, machine learning algorithms have to deal with increasingly larger data sets that might not be
+            able to be completely stored on one FPGA memory. While, FPGAs have very fast internal memory bandwidth, they
+            have limited capacity to pass data around between FPGAs.
+            
+            However, the algorithm is massively data parallel. The processing of a sample through each decision tree is 
+            completely independent
+             
+        </p>
       </section>
       
       <section id="main_content" class="inner">
+      <span style = "color:blue"> Resources </span>
         <p> Resources </p>
       </section>
       
       <section id="main_content" class="inner">
-        <p> Goals </p>
+       <span style = "color:blue"> Goals </span>
+        <p> From information about current performance gains from  </p>
       </section>
       
       <section id="main_content" class="inner">
+        <span style = "color:blue"> Platform Choice </span>
         <p> Heterogenous system design already is widely used in order to anticipate workloads that are more relevant to
             real world application of devices. For example, ASIC units in mobile devices today provide much of the image
             and video processing capabilities. The frequent use of these features as well as the energy and 
@@ -85,8 +128,12 @@
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
     
-
   </body>
+  
+  <script src="js/shCore.js"></script>
+  <script src="js/shBrushCpp.js"></script>
+  <script>
+    SyntaxHighlighter.all()
+  </script>
 </html>
