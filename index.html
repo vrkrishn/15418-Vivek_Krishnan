@@ -50,15 +50,37 @@
         </p>
         
         <pre class='brush: cpp'>
-        // my first program in C++
-        #include <iostream>
-        using namespace std;
-
-       int main ()
-       {
-         cout << "Hello World!";
-         return 0;
-       }
+        // Brief overview of classification algorithm
+        
+        for (sample in sample_data) {
+        
+            sample_result = 0;
+            
+            for (tree in forest) {
+                local_result = 0;
+                current_node = tree.base_node; //possible 0
+                
+                for (level < max_tree_depth) {
+                 
+                    node_index = NUM_NODES_PER_TREE * treeIdx + current_node
+                    node_threshold = get_threshold (node_index);
+                    sample_var_idx = get_corresponding_var (node_index);
+                    sample_var_data = sample.getVar(sample_var_idx);
+                 
+                    //If at a branching node in the tree
+                    if (level < max_tree_depth) {
+                        current_node = next_node (sample_var_data < node_threshold);
+                    //If at a leaf node in the tree
+                    } else {
+                        local_result = get_result (node_index);
+                    }
+                
+                }
+                sample_result += local_result;
+            }
+            
+            sample_responses[sample] = process_result (sample_result);
+        }
        </pre>
        
       </section>
