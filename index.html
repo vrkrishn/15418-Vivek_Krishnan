@@ -69,7 +69,8 @@
                  
                     //If at a branching node in the tree
                     if (level < max_tree_depth) {
-                        current_node = next_node (sample_var_data < node_threshold);
+                        branchLeft = (sample_var_data < node_threshold);
+                        current_node = next_node (branchLeft);
                     //If at a leaf node in the tree
                     } else {
                         local_result = get_result (node_index);
