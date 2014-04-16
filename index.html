@@ -83,7 +83,10 @@
             sample_responses[sample] = process_result (sample_result);
         }
        </pre>
-       
+       <p> The classification algorithm above is parallelizable at both the tree level and the sample level. I plan to
+           to make use of pipelining on the FPGA in order to maximize the parallelism I can get from both ends.
+         
+       </p>
       </section>
       
       <section id="main_content" class="inner">
