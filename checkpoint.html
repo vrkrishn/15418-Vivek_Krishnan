@@ -1,1 +1,90 @@
-v
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="15418 Final Project : 15418 Final Project Site for Vivek Krishnan" />
+    <link href="css/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>15418 Final Project</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/vrkrishn/15418-Vivek_Krishnan">View on GitHub</a>
+
+          <h2 id="project_title">Random Forest Classification on an FPGA</h2>
+          <h3 id="project_tagline">Vivek Krishnan</h3>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/vrkrishn/15418-Vivek_Krishnan/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/vrkrishn/15418-Vivek_Krishnan/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <br><br>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h4><b>I plan to implement the Random Forest Classification Algorithm on an FPGA. I will then compare
+            energy consumption and performance of the algorithm vs current CPU implementations.</b></h4>
+      </section>
+      
+     
+      
+      <section id="main_content" class="inner">
+      <h3> Work Completed So Far </h3>
+        <p> First I will discuss the random forest training algorithm that I plan to use in my system. Even though the training algorithm
+            for random forests is not within the scope of my project, it is imperative to testing that I have some control for generating
+            random forests across platforms. In addition, since memory bounds are the main concern in implementing a forest on an FPGA, I
+            found a random forest algorithm that would create exactly n depth d trees, so that the overall memory usage would be predictable.
+        </p>
+        <p> I have implemented the C++ code for the random forest classifier on the CPU. I am in the progress of trying to optimize the code
+            possibly using SIMD instructions, but for now the OpenMP constructs seem to have the best performance on specific datasets and 
+            forests (specific implies hard-coded forests). In addition, I have also designed the datapath of the FPGA implemention and will update the
+            project page soon accordingly in order to reflect this.
+        </p>
+      </section>
+      
+      <section id="main_content" class="inner">
+      <h1> Status on Checkpoints </h1>
+        <p> I am currently at pace with the goals I have set for myself in the schedule and am well into designing my System Verilog system for
+            the next week. However, I do not think I will be able to focus on implementing the algorithm on the GPU; I'd rather do a thourough
+            analysis on the CPU and FPGA.
+        </p>
+      </section>
+      
+      <section id="main_content" class="inner">
+       <h3> Demo for Competition </h3>
+        <p> During my demo, I will display images that show the application of the random forest classifier on the image as well as the original
+            images for comparison. In addition, I will display the compute times and approximate energy cost for both the FPGA and CPU as functions
+            against data-size. 
+        </p>
+      </section>
+      
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">15418 Final Project maintained by <a href="https://github.com/vrkrishn">vrkrishn</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+    
+  </body>
+  
+  <script src="js/shCore.js"></script>
+  <script src="js/shBrushCpp.js"></script>
+  <script>
+    SyntaxHighlighter.all()
+  </script>
+</html>
