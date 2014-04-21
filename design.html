@@ -55,16 +55,12 @@
         <p> Laid out in memory, the decision tree can be represented as a large array of size [(5 * 2 ^ s - 2) * sizeof(data)]. There are 2 ^ s - 1
             branch nodes which each take up 2 data slots of memory. There are also 2 ^ s leaf nodes which each take up 3 data slots of memory. Our system
             is implemented such that all trees have the same number of branch and leaf nodes such that indexing into a tree in the forest is 
-            straightforeward. A possible elastic modification would have an array of indices into the tree that represent where each tree starts; this system
+            straightforeward. A possible modification to emphasize scalability would have an array of indices into the tree that represent where each tree starts; this system
             could allow for trees that don't uniformly branch out.
         </p>
         <p> The way that memory is laid out for a tree, the index of the left child of a node is simply (nodeIdx << 1) while the node index of the right
             child is simply (nodeIdx << 2 + 1).
         </p>
-      </section>
-      <section class = "inner">
-         <h4>On this page I will discuss some of the design choices for the implementation of my FPGA classification algorithm</h4>
-      </section>
       
       <section id="main_content" class="inner">
         <h4> Branch Node </h4>
@@ -78,8 +74,26 @@
         </p>
         <p> The data pipeline is simply a system by which the data propogates to the result registers at the same time the result of the computation
             is complete. As implementation continues, I expect to get the exact number of clock cycles so I could hard code the number of register transfers
-            needed to faciltate storing the new updated values as the output. However, to maintain an elastic system, I could use a series of control
+            needed to faciltate storing the new updated values as the output. However, to make a more scalable system, I could use a series of control
             signals to manage the transfer between initial and final register states.
+        </p>
+      </section>
+      
+      <section id="main_content" class="inner">
+        <h4> Leaf </h4>
+        <img src = "images/design3.png" width = "500"/>
+        <p> For each leaf node, the input to the module will be a sample set, and index of a node in the current decision tree, the
+            current decision tree, as well as a valid bit to determine if the register values are ready for processing. Once again, the memory
+            controller indexes into the array of tree data using the treeIdx as well as the nodeIdx. However, the output of the memory
+            controller will be instead the sample index, a weight, and an offset. The appropriate sample is selected using the sampIdx by
+            using a mux. However, now the sample is multiplied by the weight and added to the offset such that the final result of computation
+            is [sample * weight + offset]. This result scheme allows the results of the decision tree to control the dependency of the result on
+            the actual sample data. At one end, the result could be solely determined by the path take (weight = 0). In contrast, the result could
+            be a factor of only the sample (offset = 0).
+        </p>
+        <p> The output of this module is the calculated result as well as a valid bit that determines whether or not the result is ready for
+            processing by the overall analysis unit. Using this system I will be able to get a good sample estimation value from the tree and
+            transmit it to the final analysis unit.
         </p>
       </section>
       
