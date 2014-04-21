@@ -41,10 +41,26 @@
         <a href = "index.html"> Home </a>
       </section>
       
+      <section class = "inner">
+         <h4>On this page I will discuss some of the design choices for the implementation of my FPGA classification algorithm</h4>
+      </section>
+      
       <section id="main_content" class="inner">
-        <p> On this pag I will discuss some of the design choices for the implementation of my FPGA classification algorithm
-        </p>
+        <h4> Decision Tree </h4>
         <img src = "images/design1.png" width = "500"/>
+        <p> For this implementation, I will define a decision tree as a tree with s levels. Such a tree has branch nodes, at which a sample data
+            is compared to a threshold and a path accordingly taken, as well as leaf nodes at which the final result is calculated and sent to the
+            analysis unit.
+        </p>
+        <p> Laid out in memory, the decision tree can be represented as a large array of size [(5 * 2 ^ s - 2) * sizeof(data)]. There are 2 ^ s - 1
+            branch nodes which each take up 2 data slots of memory. There are also 2 ^ s leaf nodes which each take up 3 data slots of memory. Our system
+            is implemented such that all trees have the same number of branch and leaf nodes such that indexing into a tree in the forest is 
+            straightforeward. A possible elastic modification would have an array of indices into the tree that represent where each tree starts; this system
+            could allow for trees that don't uniformly branch out.
+        </p>
+        <p>
+          ss
+        </p>
       </section>
       
     </div>
