@@ -42,7 +42,7 @@
       </section>
       
       <section class = "inner">
-         <h4>On this page I will discuss some of the design choices for the implementation of my FPGA classification algorithm</h4>
+         <h5>On this page I will discuss some of the design choices for the implementation of my FPGA classification algorithm</h5>
       </section>
       
       <section id="main_content" class="inner">
@@ -58,8 +58,28 @@
             straightforeward. A possible elastic modification would have an array of indices into the tree that represent where each tree starts; this system
             could allow for trees that don't uniformly branch out.
         </p>
-        <p>
-          ss
+        <p> The way that memory is laid out for a tree, the index of the left child of a node is simply (nodeIdx << 1) while the node index of the right
+            child is simply (nodeIdx << 2 + 1).
+        </p>
+      </section>
+      <section class = "inner">
+         <h4>On this page I will discuss some of the design choices for the implementation of my FPGA classification algorithm</h4>
+      </section>
+      
+      <section id="main_content" class="inner">
+        <h4> Branch Node </h4>
+        <img src = "images/design2.png" width = "500"/>
+        <p> For each branch node, the input to the module will be a sample set, an index of a node in the current decision tree, the
+            current decision tree, as well as a valid bit to determine if the register values are ready for comparison. First, the memory
+            controller finds the node with index (treeIdx * NODES_PER_TREE + nodeIDX) and outputs the corresponding threshold and
+            sample index value. The sampIdx is used to select one of the samples from the array of sample data using a mux. The output of
+            this mux is compared against the threshold calue outputed by the memory controller. The result of this comparison is added to the
+            shifted nodeIdx to get the appropriate child node to traverse to.
+        </p>
+        <p> The data pipeline is simply a system by which the data propogates to the result registers at the same time the result of the computation
+            is complete. As implementation continues, I expect to get the exact number of clock cycles so I could hard code the number of register transfers
+            needed to faciltate storing the new updated values as the output. However, to maintain an elastic system, I could use a series of control
+            signals to manage the transfer between initial and final register states.
         </p>
       </section>
       
