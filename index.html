@@ -58,37 +58,38 @@
         
         <pre class='brush: cpp'>
         // Brief overview of classification algorithm
+//independent iterations
+for (sample in sample_data) {
         
-        for (sample in sample_data) {
-        
-            sample_result = 0;
+    sample_result = 0;
             
-            for (tree in forest) {
-                local_result = 0;
-                current_node = tree.base_node; //possible 0
+    //independent iterations
+    for (tree in forest) {
+        local_result = 0;
+        current_node = tree.base_node;
                 
-                for (level < max_tree_depth) {
+        for (level < max_tree_depth) {
                  
-                    node_index = NUM_NODES_PER_TREE * treeIdx + current_node
-                    node_threshold = get_threshold (node_index);
-                    sample_var_idx = get_corresponding_var (node_index);
-                    sample_var_data = sample.getVar(sample_var_idx);
+            node_index = NUM_NODES_PER_TREE * treeIdx + current_node
+            node_threshold = get_threshold (node_index);
+            sample_var_idx = get_corresponding_var (node_index);
+            sample_var_data = sample.getVar(sample_var_idx);
                  
-                    //If at a branching node in the tree
-                    if (level < max_tree_depth) {
-                        branchLeft = (sample_var_data < node_threshold);
-                        current_node = next_node (branchLeft);
-                    //If at a leaf node in the tree
-                    } else {
-                        local_result = get_result (node_index);
-                    }
-                
+            //If at a branching node in the tree
+            if (level < max_tree_depth) {
+                branchLeft = (sample_var_data < node_threshold);
+                current_node = next_node (branchLeft);
+                //If at a leaf node in the tree
+                } else {
+                    local_result = get_result (node_index);
                 }
-                sample_result += local_result;
+                
             }
-            
-            sample_responses[sample] = process_result (sample_result);
+            sample_result += local_result;
         }
+            
+        sample_responses[sample] = process_result (sample_result);
+}
        </pre>
        <p> The classification algorithm above is parallelizable at both the tree level and the sample level. I plan to
            to make use of pipelining on the FPGA in order to maximize the parallelism I can get from both ends.
