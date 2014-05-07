@@ -32,7 +32,7 @@
       <section>
         <div id="title">
           <h1>Random Forest Classification on an FPGA</h1>
-          <p>15418 Final Project Site for Vivek Krishnan</p>
+          <p>15418 Final Project Site by Vivek Krishnan</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/vrkrishn">vrkrishn</a></span>
         </div>
@@ -103,7 +103,7 @@ for (sample in sample_data) {
         <h4><b>I targeted the Altera DE-2 FPGA boards with Cyclone IV FPGA units that are available in the labs of Hammershlag Hall. To draft my designs onto the board,
                I decided to use the Verilog HDL and synthesize on the board using Quartus Pro.
         </b></h4>
-        <h4><b>  At first glance, the random forest classification algorithm may not look like it has too much to
+        <h4><b>At first glance, the random forest classification algorithm may not look like it has too much to
             gain from implementation on an FPGA or hardware device. For any given given decision tree in the forest,
             travesing each level of the tree requires only one comparison compared to one lookup of the next appropriate
             state of the tree. Therefore, the computation to communication ration is inherently low in this algorithm. 
@@ -116,6 +116,14 @@ for (sample in sample_data) {
             <h4><b>However, the algorithm is massively data parallel. The processing of a sample through each decision tree is 
             completely independen. </b></h4>
         </b></h4>
+        <p> It was interesting to actually design the parallel architecture components for the algorithm execution; I did not have
+            to worry about mapping code to architecture and seeing unforseen compilation implications limit the parallel performance
+            of my code.
+        </p>
+        <p>
+            The only referance code I used in my solution was the modules that control the data input and output from the USB blaster that
+            is provided on the board.
+        </p>
         
        
              
