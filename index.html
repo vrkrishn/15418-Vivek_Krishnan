@@ -98,6 +98,36 @@ for (sample in sample_data) {
         <h4><b>I targeted the Altera DE-2 FPGA boards with Cyclone IV FPGA units that are available in the labs of Hammershlag Hall. To draft my designs onto the board,
                I decided to use the Verilog HDL and synthesize on the board using Quartus Pro.
         </b></h4>
+        <h4><b> The main structure in the random forest algorithm is the decision tree, where each node contains a sample index and a threshold through which
+                samples can decide whether to proceed down the left branch or the right branch. For each decision tree, the input to the tree is a sample of
+                data and the output is a data value determined by (weight * samp[idx] + offset) where weight, idx,and offset are determined by the leaf node 
+                that the sample ends up at.
+        </b></h4>
+        <h4><b> The main structure in the random forest algorithm is the decision tree, where each node contains a sample index and a threshold through which
+                samples can decide whether to proceed down the left branch or the right branch. For each decision tree, the input to the tree is a sample of
+                data and the output is a data value determined by (weight * samp[idx] + offset) where weight, idx,and offset are determined by the leaf node 
+                that the sample ends up at.
+        </b></h4>
+        <h4><b>  At first glance, the random forest classification algorithm may not look like it has too much to
+            gain from implementation on an FPGA or hardware device. For any given given decision tree in the forest,
+            travesing each level of the tree requires only one comparison compared to one lookup of the next appropriate
+            state of the tree. Therefore, the computation to communication ration is inherently low in this algorithm. 
+            Each decision also  requires that the decision in the previous level has already been made. 
+            
+            Another problem is that the many decision trees spit out by the tree-growing algorithms can greatly vary in
+            size and shape so any fixed width solution (such as SIMD parallelsim) can be made inefficient by the data-
+            dependent nature of the method.
+            
+            In addition, machine learning algorithms have to deal with increasingly larger data sets that might not be
+            able to be completely stored on one FPGA memory. While, FPGAs have very fast internal memory bandwidth, they
+            have limited capacity to pass data around between FPGAs.
+            
+            However, the algorithm is massively data parallel. The processing of a sample through each decision tree is 
+            completely independent
+        </b></h4>
+        
+       
+             
       </section>
 
     </div>
