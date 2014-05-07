@@ -36,6 +36,9 @@
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/vrkrishn">vrkrishn</a></span>
         </div>
+        <a href = "proposal.html">Proposal</a> <br>
+        <a href = "checkpoint.html">Checkpoint</a><br>
+        <a href = "design.html">Design Documents</a><br><br>
         <h3><span class="octicon octicon-link"></span></a> Summary</h3>
         <h4><b>I implemented a random forest classification system on an FPGA that can output samples at a rate of one sample per clock cycle. In addition, I made an alternate
               system that can signal and wait for memory responses from off-board memory. To analyze performance gains, I created a CPU implementation of
@@ -90,6 +93,11 @@ for (sample in sample_data) {
            to make use of pipelining on the FPGA in order to maximize the parallelism I can get from both ends.
          
        </p>
+        <h3><span class="octicon octicon-link"></span></a> Approach </h3>
+        <h4><b>I implemented a random forest classification system on an FPGA that can output samples at a rate of one sample per clock cycle. In addition, I made an alternate
+              system that can signal and wait for memory responses from off-board memory. To analyze performance gains, I created a CPU implementation of
+              the algorithm using OpenMP and compared execution cycles and power consumption.
+        </b></h4>
       </section>
 
     </div>
