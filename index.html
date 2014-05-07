@@ -91,17 +91,17 @@ for (sample in sample_data) {
        </pre>
        <p> The classification algorithm above is parallelizable at both the tree level and the sample level. I plan to
            to make use of pipelining on the FPGA in order to maximize the parallelism I can get from both ends.
-         
+       </p>
+       <p>
+                The main structure in the random forest algorithm is the decision tree, where each node contains a sample index and a threshold through which
+                samples can decide whether to proceed down the left branch or the right branch. For each decision tree, the input to the tree is a sample of
+                data and the output is a data value determined by (weight * samp[idx] + offset) where weight, idx,and offset are determined by the leaf node 
+                that the sample ends up at.
        </p>
         <h3><span class="octicon octicon-link"></span></a> Approach </h3>
         <h4><b>My current design implementation is on the <a href="design.html">design page</a></b></h4>
         <h4><b>I targeted the Altera DE-2 FPGA boards with Cyclone IV FPGA units that are available in the labs of Hammershlag Hall. To draft my designs onto the board,
                I decided to use the Verilog HDL and synthesize on the board using Quartus Pro.
-        </b></h4>
-        <h4><b> The main structure in the random forest algorithm is the decision tree, where each node contains a sample index and a threshold through which
-                samples can decide whether to proceed down the left branch or the right branch. For each decision tree, the input to the tree is a sample of
-                data and the output is a data value determined by (weight * samp[idx] + offset) where weight, idx,and offset are determined by the leaf node 
-                that the sample ends up at.
         </b></h4>
         <h4><b>  At first glance, the random forest classification algorithm may not look like it has too much to
             gain from implementation on an FPGA or hardware device. For any given given decision tree in the forest,
