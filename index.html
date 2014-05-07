@@ -46,6 +46,54 @@
               system that can signal and wait for memory responses from off-board memory. To analyze performance gains, I created a CPU implementation of
               the algorithm using OpenMP and compared execution cycles and power consumption.
         </b></h4>
+        <h3> Background </h3>
+        <p> A Random Forest is an ensemble classifier using many decision tree models. The training of this algorithm involves
+            taking a subset of the sample data with replacement in order to grow decision trees that have levels directly related
+            to the input variables. Random Forest Classifiers are highly accurate, scale well to large datasets, and give back 
+            information about variable interaction or importance as well.
+        </p>
+        <p> The purpose of my project is to speedup the classification part of the random forest algorithm (as opposed to the
+            growth of decision trees).
+        </p>
+        
+        <pre class='brush: cpp'>
+        // Brief overview of classification algorithm
+        
+        for (sample in sample_data) {
+        
+            sample_result = 0;
+            
+            for (tree in forest) {
+                local_result = 0;
+                current_node = tree.base_node; //possible 0
+                
+                for (level < max_tree_depth) {
+                 
+                    node_index = NUM_NODES_PER_TREE * treeIdx + current_node
+                    node_threshold = get_threshold (node_index);
+                    sample_var_idx = get_corresponding_var (node_index);
+                    sample_var_data = sample.getVar(sample_var_idx);
+                 
+                    //If at a branching node in the tree
+                    if (level < max_tree_depth) {
+                        branchLeft = (sample_var_data < node_threshold);
+                        current_node = next_node (branchLeft);
+                    //If at a leaf node in the tree
+                    } else {
+                        local_result = get_result (node_index);
+                    }
+                
+                }
+                sample_result += local_result;
+            }
+            
+            sample_responses[sample] = process_result (sample_result);
+        }
+       </pre>
+       <p> The classification algorithm above is parallelizable at both the tree level and the sample level. I plan to
+           to make use of pipelining on the FPGA in order to maximize the parallelism I can get from both ends.
+         
+       </p>
       </section>
 
     </div>
