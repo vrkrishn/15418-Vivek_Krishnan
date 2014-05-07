@@ -100,22 +100,22 @@ for (sample in sample_data) {
        </p>
         <h3><span class="octicon octicon-link"></span></a> Approach </h3>
         <h4><b>My current design implementation is on the <a href="design.html">design page</a></b></h4>
-        <h4><b>I targeted the Altera DE-2 FPGA boards with Cyclone IV FPGA units that are available in the labs of Hammershlag Hall. To draft my designs onto the board,
+        <p>I targeted the Altera DE-2 FPGA boards with Cyclone IV FPGA units that are available in the labs of Hammershlag Hall. To draft my designs onto the board,
                I decided to use the Verilog HDL and synthesize on the board using Quartus Pro.
-        </b></h4>
-        <h4><b>At first glance, the random forest classification algorithm may not look like it has too much to
+        </p>
+        <p>At first glance, the random forest classification algorithm may not look like it has too much to
             gain from implementation on an FPGA or hardware device. For any given given decision tree in the forest,
             travesing each level of the tree requires only one comparison compared to one lookup of the next appropriate
             state of the tree. Therefore, the computation to communication ration is inherently low in this algorithm. 
-            Each decision alsorequires that the decision in the previous level has already been made. </b></h4>
+            Each decision alsorequires that the decision in the previous level has already been made.</p>
             
-            <h4><b>  In addition, machine learning algorithms have to deal with increasingly larger data sets that might not be
+            <p>In addition, machine learning algorithms have to deal with increasingly larger data sets that might not be
             able to be completely stored on one FPGA memory. While, FPGAs have very fast internal memory bandwidth, they
-            have limited capacity to pass data in and out of an FPGA</b></h4>
+            have limited capacity to pass data in and out of an FPGA</p>
             
-            <h4><b>However, the algorithm is massively data parallel. The processing of a sample through each decision tree is 
-            completely independen. </b></h4>
-        </b></h4>
+            <p>However, the algorithm is massively data parallel. The processing of a sample through each decision tree is 
+            completely independen.</p>
+        
         <p> It was interesting to actually design the parallel architecture components for the algorithm execution; I did not have
             to worry about mapping code to architecture and seeing unforseen compilation implications limit the parallel performance
             of my code.
