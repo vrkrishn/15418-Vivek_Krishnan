@@ -79,97 +79,20 @@
         </p>
         <p> Assuming that memory access takes one cycle, the passage of a sample and node through this stage is one cycle.
         </p>
-      </section>
-        
-        <h3><span class="octicon octicon-link"></span></a> Summary</h3>
-        <h4><b>I implemented a random forest classification system on an FPGA that can output samples at a rate of one sample per clock cycle. In addition, I made an alternate
-              system that can signal and wait for memory responses from off-board memory. To analyze performance gains, I created a CPU implementation of
-              the algorithm using OpenMP and compared execution cycles and power consumption.
-        </b></h4>
-        <h3> Background </h3>
-        <p> A Random Forest is an ensemble classifier using many decision tree models. The training of this algorithm involves
-            taking a subset of the sample data with replacement in order to grow decision trees that have levels directly related
-            to the input variables. Random Forest Classifiers are highly accurate, scale well to large datasets, and give back 
-            information about variable interaction or importance as well.
-        </p>
-        <p> The purpose of my project is to speedup the classification part of the random forest algorithm (as opposed to the
-            growth of decision trees).
-        </p>
-        
-        <pre class='brush: cpp'>
-        // Brief overview of classification algorithm
-//independent iterations
-for (sample in sample_data) {
-        
-    sample_result = 0;
-            
-    //independent iterations
-    for (tree in forest) {
-        local_result = 0;
-        current_node = tree.base_node;
-                
-        for (level < max_tree_depth) {
-                 
-            node_index = NUM_NODES_PER_TREE * treeIdx + current_node
-            node_threshold = get_threshold (node_index);
-            sample_var_idx = get_corresponding_var (node_index);
-            sample_var_data = sample.getVar(sample_var_idx);
-                 
-            //If at a branching node in the tree
-            if (level < max_tree_depth) {
-                branchLeft = (sample_var_data < node_threshold);
-                current_node = next_node (branchLeft);
-                //If at a leaf node in the tree
-                } else {
-                    local_result = get_result (node_index);
-                }
-                
-            }
-            sample_result += local_result;
-        }
-            
-        sample_responses[sample] = process_result (sample_result);
-}
-       </pre>
-       <p> The classification algorithm above is parallelizable at both the tree level and the sample level. I plan to
-           to make use of pipelining on the FPGA in order to maximize the parallelism I can get from both ends.
-       </p>
-       <p>
-                The main structure in the random forest algorithm is the decision tree, where each node contains a sample index and a threshold through which
-                samples can decide whether to proceed down the left branch or the right branch. For each decision tree, the input to the tree is a sample of
-                data and the output is a data value determined by (weight * samp[idx] + offset) where weight, idx,and offset are determined by the leaf node 
-                that the sample ends up at.
-       </p>
-        <h3><span class="octicon octicon-link"></span></a> Approach </h3>
-        <h4><b>My current design implementation is on the <a href="design.html">design page</a></b></h4>
-        <p>I targeted the Altera DE-2 FPGA boards with Cyclone IV FPGA units that are available in the labs of Hammershlag Hall. To draft my designs onto the board,
-               I decided to use the Verilog HDL and synthesize on the board using Quartus Pro.
-        </p>
-        <p>At first glance, the random forest classification algorithm may not look like it has too much to
-            gain from implementation on an FPGA or hardware device. For any given given decision tree in the forest,
-            travesing each level of the tree requires only one comparison compared to one lookup of the next appropriate
-            state of the tree. Therefore, the computation to communication ration is inherently low in this algorithm. 
-            Each decision alsorequires that the decision in the previous level has already been made.</p>
-            
-            <p>In addition, machine learning algorithms have to deal with increasingly larger data sets that might not be
-            able to be completely stored on one FPGA memory. While, FPGAs have very fast internal memory bandwidth, they
-            have limited capacity to pass data in and out of an FPGA</p>
-            
-            <p>However, the algorithm is massively data parallel. The processing of a sample through each decision tree is 
-            completely independen.</p>
-        
-        <p> It was interesting to actually design the parallel architecture components for the algorithm execution; I did not have
-            to worry about mapping code to architecture and seeing unforseen compilation implications limit the parallel performance
-            of my code.
-        </p>
+        <h3><span class="octicon octicon-link"></span></a> Forest Design and Perpendicular Pipelines</h3>
+         <p> <img class = "img-responsive" src = "images/internal_stage.png" width = "400" align="left" style = "margin:10px;"/>
+            For each internal node, the input to the module will be a sample set, an index of a node in the current decision tree, the
+            current decision tree, as well as a valid bit to determine if the register values are ready for comparison, as well as the recieve lines for
+            the modules that are dependent. The outputs of the module are receive lines when recieving data, an output nodeIdx, the sample for the next node
+            to the right, and valid lines for both sample and nodeIdx.</p>
         <p>
-            The only referance code I used in my solution was the modules that control the data input and output from the USB blaster that
-            is provided on the board.
+            First, the memory controller finds the node with index (treeIdx * NODES_PER_TREE + nodeIDX) and outputs the corresponding threshold and
+            sample index value. The sampIdx is used to select one of the samples from the array of sample data using a mux. The output of
+            this mux is compared against the threshold calue outputed by the memory controller. The result of this comparison is added to the
+            shifted nodeIdx to get the appropriate child node to traverse to.
         </p>
-        
-       
-             
       </section>
+        
 
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
