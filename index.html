@@ -136,6 +136,23 @@ for (sample in sample_data) {
         <p>
            Here I provide some graphs of speedup and energy efficiency that I recorded.
         </p>
+        <p>
+          What limited performance on the CPU edition is that there was a little communication-to-computation ratio, and the problem size for
+          each tree was too small to justify creating a new thread for each tree. I found that parallelizing on just one variable yielded better
+          performance that parlalelizing both samples and trees. In addition, almost all of the execution time on the CPU version was spent on summing the
+          results of the performance together in the reduction phase.
+        </p>
+        <p>
+          On the FPGA, the limiting factor in parallel performance was the I/O on the FPGA unit that had limited capacity to trasmit data.
+          Therefore, a better solution for the problem was to cap the bandwidth of the system such that it can be modified to accomodate changing
+          I/O performances on chips. Most of the execution time for this system is spent in the forest computation. Because the sample input is consitent,
+          I did not have to use a series of locks on the summing tree in order to sum up all of the results of the computation. I could just add the input
+          at a bus at each interval and then increment the tree the bus was pointing to. Therefore summing up the values took as long as execution time
+          took for the random forest.
+        </p>
+        <p>
+          
+        </p>
              
       </section>
 
