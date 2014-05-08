@@ -88,10 +88,10 @@
             and such to counteract the buildup of samples near the output bus of the FPGA.
             </p>
         <p> <img class = "img-responsive" src = "images/cross_forest.png" width = "300" align="left" style = "margin:10px;"/>
-            First, the memory controller finds the node with index (treeIdx * NODES_PER_TREE + nodeIDX) and outputs the corresponding threshold and
-            sample index value. The sampIdx is used to select one of the samples from the array of sample data using a mux. The output of
-            this mux is compared against the threshold calue outputed by the memory controller. The result of this comparison is added to the
-            shifted nodeIdx to get the appropriate child node to traverse to.
+            To modify this, I crossed my pipelines such that samples flow in from the left to the right of each node while the node index flows from
+            top to bottom through the node. As the samples begin fed by the data pipeline are also moving down at the same rate as the node index in each
+            tree, a node will receive its sample and node index at the same time. The data rate out of this system is 1 sample per cycle and this is more
+            than enough to fully occupy the I/O bus of the FPGA.
         </p>
       </section>
         
