@@ -16,8 +16,7 @@ include filelist.dpi
 include filelist.hsopt
 
 
-VCS_OBJS =$(CG_OBJS) 5NrI_d.o 5NrIB_d.o \
-	SIM_l.o 
+VCS_OBJS =$(CG_OBJS) 5NrI_d.o 5NrIB_d.o SIM_l.o 
 
 CG_OBJS= _vcsobj_1_1.o 
 
@@ -29,8 +28,9 @@ _vcsobj_1_1.o : _vcsobj_1_1.a
 		ld -r -m elf_i386 -o $@ --whole-archive $< --no-whole-archive; \
 	fi
 
+	@$(AR) -s excl_vcsobj_0_1.a
 
-VCS_INCR_OBJS=pre_vcsobj_0_1.o pre_vcsobj_1_1.o pre_vcsobj_1_2.o 
+VCS_INCR_OBJS=pre_vcsobj_0_1.o pre_vcsobj_1_1.o pre_vcsobj_1_2.o pre_vcsobj_1_3.o pre_vcsobj_1_4.o 
 
 pre_vcsobj_0_1.o : pre_vcsobj_0_1.a
 	@$(AR) -s $<
@@ -40,6 +40,12 @@ pre_vcsobj_1_1.o : pre_vcsobj_1_1.a
 	ld -r -m elf_i386 -o $@ --whole-archive $< --no-whole-archive
 
 pre_vcsobj_1_2.o : pre_vcsobj_1_2.a
+	ld -r -m elf_i386 -o $@ --whole-archive $< --no-whole-archive
+
+pre_vcsobj_1_3.o : pre_vcsobj_1_3.a
+	ld -r -m elf_i386 -o $@ --whole-archive $< --no-whole-archive
+
+pre_vcsobj_1_4.o : pre_vcsobj_1_4.a
 	ld -r -m elf_i386 -o $@ --whole-archive $< --no-whole-archive
 
 

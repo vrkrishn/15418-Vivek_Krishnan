@@ -68,6 +68,11 @@ module connection_fixed_test;
 					   1'b1, 1'b1, samp22, , nodeIdx22, nodeIdxOut2,
 					   {4'b0010, 4'b0110}, ,clk, rst);
 	
+       //Tree Summer
+        logic unitDone;
+	logic [$clog2(4 * 4) + 4 - 1: 0] dataOut;
+	tree_summer_fixed #(4,4,16) treeSum({nodeIdxOut0, nodeIdxOut1, nodeIdxOut2},{nValOut0, nValOut1, nValOut2}, dataOut, unitDone, clk, rst); 
+
 	initial begin
 	    clk = 0;
 	    forever #5 clk = ~clk;

@@ -121,6 +121,4 @@ module Grid4x4 #(parameter DATA_SIZE = 4, parameter SAMPLE_SIZE = 4,
 		     memRec00[4 * $clog2(NUM_NODES) - 1 -: $clog2(NUM_NODES)],
 		     enable, memRdy, clk, rst);
 
-
-
 endmodule : Grid4x4

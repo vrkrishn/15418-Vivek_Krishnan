@@ -56,6 +56,6 @@ module sample_feeder
 
     register #($clog2(NUM_SAMPLES) + 1) indexReg(sampleIndex, sampIn, incr, clk, rst | clearRegs);
     
-    assign currentSample = samples[((sampleIndex[$clog2(NUM_SAMPLES) -1 : 0]) + 1) * SAMPLE_SIZE * DATA_SIZE - 1 -: SAMPLE_SIZE * DATA_SIZE];
+    assign currentSample = samples[((sampleIndex) + 1) * SAMPLE_SIZE * DATA_SIZE - 1 -: SAMPLE_SIZE * DATA_SIZE];
 
 endmodule : sample_feeder

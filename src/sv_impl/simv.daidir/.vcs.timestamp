@@ -1,5 +1,5 @@
 0 
-20
+25
 -Mamsrun=
 -Masflags=--32
 -Mcc=gcc
@@ -17,9 +17,14 @@
 -gen_obj
 -sverilog
 /afs/ece.cmu.edu/support/synopsys/synopsys/share/image/usr/local/synopsys/vcs-mx_vF-2011.12-SP1/suse32/bin/vcs1
-grids/2x2_Grid.sv
+src/internal_stage.sv
 src/internal_stage_fixed.sv
+src/memory.sv
+src/sample_feeder.sv
+src/sample_pipeline.sv
+src/summing_tree.sv
 src/utility.sv
+tests/connection_fixed_test.sv
 41
 sysc_uni_pwd=/afs/ece.cmu.edu/usr/vrkrishn/Private/class/15418/FinalProject
 module=() {  eval `/usr/bin/modulecmd bash $*`
@@ -37,9 +42,9 @@ UNAME=/bin/uname
 TOOL_HOME=/afs/ece.cmu.edu/support/synopsys/synopsys/share/image/usr/local/synopsys/vcs-mx_vF-2011.12-SP1/suse32
 SYN_DIR=/usr/local/synopsys/synopsys-2007.03-SP5
 SYNOPSYS=/usr/local/synopsys
-SSH_TTY=/dev/pts/2
-SSH_CONNECTION=128.237.143.151 65071 128.2.131.11 22
-SSH_CLIENT=128.237.143.151 65071 22
+SSH_TTY=/dev/pts/1
+SSH_CONNECTION=128.237.236.6 49384 128.2.131.10 22
+SSH_CLIENT=128.237.236.6 49384 22
 SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
 SELINUX_USE_CURRENT_RANGE=
 SELINUX_ROLE_REQUESTED=
@@ -54,23 +59,28 @@ MODULESHOME=/usr/share/Modules
 MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles
 LOADEDMODULES=
 LESSOPEN=|/usr/bin/lesspipe.sh %s
-KRB5CCNAME=FILE:/var/tmp/krb5cc_vrkrishn_FYCg4Q
+KRB5CCNAME=FILE:/var/tmp/krb5cc_vrkrishn_ZrHQnM
 KDE_IS_PRELINKED=1
 KDEDIRS=/usr
-HOSTNAME=ece001.ece.cmu.edu
+HOSTNAME=ece000.ece.cmu.edu
 HISTCONTROL=ignoreboth
 G_BROKEN_FILENAMES=1
 DC_HOME=/usr/local/synopsys/synopsys-2007.03-SP5/linux/syn
 CVS_RSH=ssh
 AKLOG=/usr/bin/aklog
 0
-3
-1399242573 grids/2x2_Grid.sv
-1399248707 src/internal_stage_fixed.sv
-1399192222 src/utility.sv
+8
+1399588489 tests/connection_fixed_test.sv
+1399585316 src/utility.sv
+1399588063 src/summing_tree.sv
+1399179832 src/sample_pipeline.sv
+1399585609 src/sample_feeder.sv
+1399261463 src/memory.sv
+1399191213 src/internal_stage.sv
+1399588387 src/internal_stage_fixed.sv
 4
 0 
 1338179553 /afs/ece.cmu.edu/support/synopsys/synopsys/share/image/usr/local/synopsys/vcs-mx_vF-2011.12-SP1/suse32/lib/libvirsim.so
 1338176222 /afs/ece.cmu.edu/support/synopsys/synopsys/share/image/usr/local/synopsys/vcs-mx_vF-2011.12-SP1/suse32/lib/librterrorinf.so
 1338176038 /afs/ece.cmu.edu/support/synopsys/synopsys/share/image/usr/local/synopsys/vcs-mx_vF-2011.12-SP1/suse32/lib/libsnpsmalloc.so
-1399248730 simv.daidir
+1399588493 simv.daidir
