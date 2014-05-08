@@ -36,9 +36,74 @@
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/vrkrishn">vrkrishn</a></span>
         </div>
-        <a href = "proposal.html">Proposal</a> <br>
-        <a href = "checkpoint.html">Checkpoint</a><br>
-        <a href = "design.html">Design Documents</a><br><br>
+        <a href = "index.html">Home</a> <br>
+        <section class = "inner">
+         <h5>On this page I will discuss some of the design choices for the implementation of my FPGA classification algorithm</h5>
+      </section>
+      
+      <section id="main_content" class="inner">
+        <h4> Decision Tree </h4>
+        <img src = "images/basic_tree.png" width = "500"/>
+        <p> For this implementation, I will define a decision tree as a tree with s levels. Such a tree has branch nodes, at which a sample data
+            is compared to a threshold and a path accordingly taken, as well as leaf nodes at which the final result is calculated and sent to the
+            analysis unit.
+        </p>
+        <p> Laid out in memory, the decision tree can be represented as a large array of size [(5 * 2 ^ s - 2) * sizeof(data)]. There are 2 ^ s - 1
+            branch nodes which each take up 2 data slots of memory. There are also 2 ^ s leaf nodes which each take up 3 data slots of memory. Our system
+            is implemented such that all trees have the same number of branch and leaf nodes such that indexing into a tree in the forest is 
+            straightforeward. A possible modification to emphasize scalability would have an array of indices into the tree that represent where each tree starts; this system
+            could allow for trees that don't uniformly branch out.
+        </p>
+        <p> The way that memory is laid out for a tree, the index of the left child of a node is simply (nodeIdx << 1) while the node index of the right
+            child is simply (nodeIdx << 2 + 1).
+        </p>
+      
+      
+      
+      
+      
+      
+      <section id="main_content" class="inner">
+        <h4> Branch Node </h4>
+        <img src = "images/design2.png" width = "500"/>
+        <p> For each branch node, the input to the module will be a sample set, an index of a node in the current decision tree, the
+            current decision tree, as well as a valid bit to determine if the register values are ready for comparison. First, the memory
+            controller finds the node with index (treeIdx * NODES_PER_TREE + nodeIDX) and outputs the corresponding threshold and
+            sample index value. The sampIdx is used to select one of the samples from the array of sample data using a mux. The output of
+            this mux is compared against the threshold calue outputed by the memory controller. The result of this comparison is added to the
+            shifted nodeIdx to get the appropriate child node to traverse to.
+        </p>
+        <p> The data pipeline is simply a system by which the data propogates to the result registers at the same time the result of the computation
+            is complete. As implementation continues, I expect to get the exact number of clock cycles so I could hard code the number of register transfers
+            needed to faciltate storing the new updated values as the output. However, to make a more scalable system, I could use a series of control
+            signals to manage the transfer between initial and final register states.
+        </p>
+      </section>
+      
+      <section id="main_content" class="inner">
+        <h4> Leaf Node </h4>
+        <img src = "images/design3.png" width = "500"/>
+        <p> For each leaf node, the input to the module will be a sample set, and index of a node in the current decision tree, the
+            current decision tree, as well as a valid bit to determine if the register values are ready for processing. Once again, the memory
+            controller indexes into the array of tree data using the treeIdx as well as the nodeIdx. However, the output of the memory
+            controller will be instead the sample index, a weight, and an offset. The appropriate sample is selected using the sampIdx by
+            using a mux. However, now the sample is multiplied by the weight and added to the offset such that the final result of computation
+            is [sample * weight + offset]. This result scheme allows the results of the decision tree to control the dependency of the result on
+            the actual sample data. At one end, the result could be solely determined by the path take (weight = 0). In contrast, the result could
+            be a factor of only the sample (offset = 0).
+        </p>
+        <p> The output of this module is the calculated result as well as a valid bit that determines whether or not the result is ready for
+            processing by the overall analysis unit. Using this system I will be able to get a good sample estimation value from the tree and
+            transmit it to the final analysis unit.
+        </p>
+      </section>
+        
+        
+        
+        
+        
+        
+        
         <h3><span class="octicon octicon-link"></span></a> Summary</h3>
         <h4><b>I implemented a random forest classification system on an FPGA that can output samples at a rate of one sample per clock cycle. In addition, I made an alternate
               system that can signal and wait for memory responses from off-board memory. To analyze performance gains, I created a CPU implementation of
