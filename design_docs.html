@@ -58,7 +58,7 @@
             used by the tree will grow exponentially with respect to the depth of the tree. In addition, we can only perform action at one node in each level at any
             given time because of the dependencies of the tree.
         </p>
-        <p><img class="img-responsive" src = "images/basic_tree.png" width = "300" align="right" style = "padding:5px;"/>
+        <p><img class="img-responsive" src = "images/level_tree.png" width = "300" align="right" style = "padding:5px;"/>
           Therefore, I decided to instead represent each level of the tree as a stage and store the values for each node in an appropriate stage memory for
           each level of the tree. The SRAM memory banks on the FPGA are dual port at max so I could not achieve
           both one cycle memory access and a coagulated bank of memory. Therefore, the memory at each stage is a different memory module which is hooked up to the
