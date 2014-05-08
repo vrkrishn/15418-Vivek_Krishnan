@@ -80,12 +80,14 @@
         <p> Assuming that memory access takes one cycle, the passage of a sample and node through this stage is one cycle.
         </p>
         <h3><span class="octicon octicon-link"></span></a> Forest Design and Perpendicular Pipelines</h3>
-         <p> <img class = "img-responsive" src = "images/internal_stage.png" width = "400" align="left" style = "margin:10px;"/>
-            For each internal node, the input to the module will be a sample set, an index of a node in the current decision tree, the
-            current decision tree, as well as a valid bit to determine if the register values are ready for comparison, as well as the recieve lines for
-            the modules that are dependent. The outputs of the module are receive lines when recieving data, an output nodeIdx, the sample for the next node
-            to the right, and valid lines for both sample and nodeIdx.</p>
-        <p>
+         <p> <img class = "img-responsive" src = "images/basic_forest.png" width = "300" align="right" style = "margin:10px;"/>
+            The first implementation of the forest was to create n trees, each with thier own sample pipeline and node pipeline runnning from
+            level to level. The bandwidth of this implementation was n samples per cycle processed and the routing was simply order of the 
+            depth of the trees times the number of trees. This was a good implementation but I was not able to control output rate of the system.
+            Because the I/O of the FPGA is relatively slow compared to this datarate, each of my nodes had to have added logic of control signals
+            and such to counteract the buildup of samples near the output bus of the FPGA.
+            </p>
+        <p> <img class = "img-responsive" src = "images/cross_forest.png" width = "300" align="left" style = "margin:10px;"/>
             First, the memory controller finds the node with index (treeIdx * NODES_PER_TREE + nodeIDX) and outputs the corresponding threshold and
             sample index value. The sampIdx is used to select one of the samples from the array of sample data using a mux. The output of
             this mux is compared against the threshold calue outputed by the memory controller. The result of this comparison is added to the
