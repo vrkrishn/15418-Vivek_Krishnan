@@ -54,6 +54,10 @@
         <p> The way that memory is laid out for a tree, the index of the left child of a node is simply (nodeIdx << 1) while the node index of the right
             child is simply (nodeIdx << 2 + 1).
         </p>
+        <p> The naive implementation of the tree is to create node logic for every node in the tree. However, in this setup, the amount of routing logic
+            used by the tree will grow exponentially with respect to the depth of the tree. In addition, we can only perform action at one node in each level at any
+            given time because of the dependencies of the tree.
+        </p>
       
       
       
