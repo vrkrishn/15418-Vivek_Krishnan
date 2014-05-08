@@ -40,13 +40,11 @@
         <h5>On this page I will discuss some of the design choices for the implementation of my FPGA classification algorithm</h5> <br>
          
         <h3><span class="octicon octicon-link"></span></a> Decision Tree</h3>
-        <p> <img class="img-responsive" src = "images/basic_tree.png" width = "300" align="left" style = "padding:5px;"/>
+        <p> <img class="img-responsive" src = "images/basic_tree.png" width = "300" align="left" style = "margin:5px;"/>
             For this implementation, I will define a decision tree as a tree with s levels. Such a tree has branch nodes, at which a sample data
             is compared to a threshold and a path accordingly taken, as well as leaf nodes at which the final result is calculated and sent to the
-            analysis unit.
-        </p>
-        <p> Laid out in memory, the decision tree can be represented as a large array of size [(5 * 2 ^ s - 2) * sizeof(data)]. There are 2 ^ s - 1
-            branch nodes which each take up 2 data slots of memory. There are also 2 ^ s leaf nodes which each take up 3 data slots of memory. Our system
+            analysis unit. Laid out in memory, the decision tree can be represented as a large array of size [(5 * 2 ^ s - 2) * sizeof(data)]. There are 2 ^ s - 1
+            branch nodes which each take up 2 data slots of memory. There are also 2 ^ s leaf nodes which each take up 3 data slots of memory. My system
             is implemented such that all trees have the same number of branch and leaf nodes such that indexing into a tree in the forest is 
             straightforeward. A possible modification to emphasize scalability would have an array of indices into the tree that represent where each tree starts; this system
             could allow for trees that don't uniformly branch out.
@@ -58,7 +56,7 @@
             used by the tree will grow exponentially with respect to the depth of the tree. In addition, we can only perform action at one node in each level at any
             given time because of the dependencies of the tree.
         </p>
-        <p><img class="img-responsive" src = "images/level_tree.png" width = "300" align="right" style = "padding:5px;"/>
+        <p><img class="img-responsive" src = "images/level_tree.png" width = "300" align="right" style = "margin:5px;"/>
           Therefore, I decided to instead represent each level of the tree as a stage and store the values for each node in an appropriate stage memory for
           each level of the tree. The SRAM memory banks on the FPGA are dual port at max so I could not achieve
           both one cycle memory access and a coagulated bank of memory. Therefore, the memory at each stage is a different memory module which is hooked up to the
@@ -67,10 +65,6 @@
         <p>There modifications reduce the routing logic on the FPGA tree to about linear compared to the depth of the tree. In this version of the tree, the node index
            is passed in from the top of the tree and will shift either to the right or left based on which direction the sample has to go.
         </p>
-      
-      
-      
-      
       
       <section id="main_content" class="inner">
         <h4> Branch Node </h4>
