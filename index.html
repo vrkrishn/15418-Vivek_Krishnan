@@ -126,8 +126,16 @@ for (sample in sample_data) {
         </p>
         
         <h3><span class="octicon octicon-link"></span></a> Results </h3>
-        <p> Will be posted soon</p>
-       
+        <p>In order to gain a good standard for the performance of the algorithm on different devices, I decided to
+           use a metric of samples/clock cycle. For data, I consistently used 32 bit data to model operations on floating point
+           integers. For varying data, I varied the number of trees in the sample and the number of samples I put through the 
+           machine. To gain information about clock cycles, I used a cycle timer to get execution time on the CPU version and
+           coverted the time to clock cycles using information about the machine clocks on the machines. Power was similarly calculated
+           on the CPU using performance statistics from manufacturer websites while a multiometer was used for the FPGA units.
+        </p>
+        <p>
+           Here I provide some graphs of speedup and energy efficiency that I recorded.
+        </p>
              
       </section>
 
