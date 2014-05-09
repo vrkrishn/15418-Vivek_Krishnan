@@ -15,7 +15,7 @@
       int sampIdx;
   };
 
-void parallel_forest_analysis(float *res, float *samples, int n_samps, int n_samp_size,
+void my_parallel_forest_analysis(float *res, float *samples, int n_samps, int n_samp_size,
                               bnode *forest_branches, lnode *forest_leaves, int num_trees, int depth);
 void sequential_forest_analysis(float *res, float *samples, int n_samps,int n_samp_size,
                                 bnode *forest_branches, lnode *forest_leaves, int num_trees, int depth);

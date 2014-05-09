@@ -107,10 +107,11 @@ int main(int argc, char** argv) {
 
     double start_time = CycleTimer::currentSeconds();
     for (int i = 0; i < ITER_CYCLE; i++)
-        parallel_forest_analysis(&seq_sum, samples, num_samps, samp_size, forest_branches, forest_leaves, num_trees, depth);
+        my_parallel_forest_analysis(&seq_sum, samples, num_samps, samp_size, forest_branches, forest_leaves, num_trees, depth);
     double end_time = CycleTimer::currentSeconds();
     double speed_seq_rfc = end_time - start_time;
     printf("Sequential Forest: %.9f sec\n", speed_seq_rfc);
+    printf("SeqSum: %f\n",seq_sum);
 
     generateRandomForest(forest_branches, forest_leaves, num_trees, depth, samp_size);
     generateRandomSamples(samples, num_samps, samp_size);
